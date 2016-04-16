@@ -1,5 +1,6 @@
 #ifndef INVENTORYITEM_H
 #define INVENTORYITEM_H
+#include "stdafx.h"
 #include <cstring>   // Needed for strlen and strcpy
 
 // Constant for the description's default size
@@ -8,24 +9,18 @@ const int DEFAULT_SIZE = 51;
 class InventoryItem
 {
 private:
-   char *description;  // The item description
+   char description[32];  // The item description
    double cost;        // The item cost
    int units;          // Number of units on hand
    
    // Private member function.
-   void createDescription(int size, char *value)
-      { // Allocate the default amount of memory for description.
-        description = new char [size];
-        
-        // Store a value in the memory.
-        strcpy_s(description, DEFAULT_SIZE, value); }
-
+   
 public:
    // Constructor #1
    InventoryItem()
       { // Store an empty string in the description
         // attribute.
-        createDescription(DEFAULT_SIZE, "");
+        strcpy(description, "");
         
         // Initialize cost and units.
         cost = 0.0;
@@ -34,7 +29,7 @@ public:
    // Constructor #2
    InventoryItem(char *desc)
       { // Allocate memory and store the description.
-        createDescription(strnlen_s(desc, DEFAULT_SIZE), desc); 
+        strcpy(description,desc);
         
         // Initialize cost and units.
         cost = 0.0;
@@ -43,19 +38,26 @@ public:
    // Constructor #3
    InventoryItem(char *desc, double c, int u)
       { // Allocate memory and store the description.
-		  createDescription(strnlen_s(desc, DEFAULT_SIZE), desc); 
+		  strcpy(description,desc);
 
         // Assign values to cost and units.
         cost = c;
         units = u; }      
         
+   InventoryItem(const InventoryItem &i)
+   {
+	   strcpy(description, i.description);
+	   cost = i.cost;
+	   units = i.units;
+   }
+   
    // Destructor
    ~InventoryItem()
       { delete [] description; }
 
    // Mutator functions
    void setDescription(char *d) 
-	  { strcpy_s(description, DEFAULT_SIZE, d); }
+	  { strcpy(description, d); }
 
    void setCost(double c)
       { cost = c; }
@@ -64,7 +66,7 @@ public:
       { units = u; }
 
    // Accessor functions
-   const char *getDescription() const
+   const char *getDescription() 
       { return description; }
          
    double getCost() const

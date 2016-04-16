@@ -1,6 +1,6 @@
 #ifndef CASHREGISTER_H
 #define CASHREGISTER_H
-
+#include "stdafx.h"
 #include "InventoryItem.h"
 
 class CashRegister
@@ -24,6 +24,7 @@ private:
 
 public:
 	// Constructor 
+	CashRegister();
 	CashRegister(InventoryItem*, int);
 
 	// Other public functions
