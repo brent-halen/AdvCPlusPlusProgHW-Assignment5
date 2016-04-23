@@ -24,7 +24,6 @@ private:
 
 public:
 	// Constructor 
-	CashRegister();
 	CashRegister(InventoryItem*, int);
 
 	// Other public functions
